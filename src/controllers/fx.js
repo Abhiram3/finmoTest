@@ -23,12 +23,11 @@ const fxRate = async (request, response) => {
             toCurrency,
             expiryAt: Date.now() + process.env.SPOT * 1000
         }
-        console.log(fxData);
         const quoteId = FxService.addRate(fxData);
         response.status(200).json({ quoteId, rate });
     } catch (e) {
-        console.log('why i am here!', e);
-        response.status(500).send(e);
+        console.log(e);
+        response.status(500).send('Something went wrong!');
     }
 }
 
@@ -45,7 +44,8 @@ const fxConvert = (request, response) => {
         const convertedAmount = amount * rate; 
         response.status(200).json({ currency: toCurrency, convertedAmount });
     } catch (e) {
-
+        console.log(e);
+        response.status(500).send('Something went wrong!');
     }
 }
 
